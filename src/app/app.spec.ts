@@ -26,7 +26,7 @@ describe('App', () => {
     await TestBed.inject(Router).navigateByUrl('/');
     await fixture.whenStable();
     const element: HTMLElement = fixture.nativeElement;
-    expect(element.querySelector('h1')?.textContent).toContain('Start');
+    expect(element.querySelector('h1')?.textContent).toContain('Probeaufgabe Angular');
     expect([...element.querySelectorAll('nav a')].map(a => a.textContent?.trim())).toEqual(['Start', 'People']);
     TestBed.inject(HttpTestingController).expectNone(() => true);
   });

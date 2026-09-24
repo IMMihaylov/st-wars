@@ -20,7 +20,7 @@ describe('People navigation', () => {
     await fixture.whenStable();
     const firstNavigation = router.navigateByUrl('/people');
     await vi.waitFor(() => {
-      expect(fixture.nativeElement.querySelector('h1').textContent).toContain('Start');
+      expect(fixture.nativeElement.querySelector('h1').textContent).toContain('Probeaufgabe Angular');
       http.expectOne(endpoint).flush([
         { url: `${endpoint}/1`, name: 'Luke', height: '172', mass: '77', birth_year: '19BBY', gender: 'male' },
       ]);
