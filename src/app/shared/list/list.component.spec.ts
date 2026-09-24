@@ -8,7 +8,7 @@ describe('General list', () => {
     fixture.componentRef.setInput('hasMore', true);
     const selected: string[] = [];
     let loads = 0;
-    fixture.componentInstance.itemSelected.subscribe(id => selected.push(id));
+    fixture.componentInstance.itemSelected.subscribe((id) => selected.push(id));
     fixture.componentInstance.loadMore.subscribe(() => loads++);
     await fixture.whenStable();
     const row = fixture.nativeElement.querySelector('button');
@@ -16,7 +16,10 @@ describe('General list', () => {
     row.click();
     expect(selected).toEqual(['1']);
     const viewport: HTMLElement = fixture.nativeElement.querySelector('[aria-label="People list"]');
-    Object.defineProperties(viewport, { clientHeight: { value: 100 }, scrollHeight: { value: 300 } });
+    Object.defineProperties(viewport, {
+      clientHeight: { value: 100 },
+      scrollHeight: { value: 300 },
+    });
     viewport.scrollTop = 100;
     viewport.dispatchEvent(new Event('scroll'));
     expect(loads).toBe(0);
@@ -24,7 +27,10 @@ describe('General list', () => {
     viewport.dispatchEvent(new Event('scroll'));
     viewport.dispatchEvent(new Event('scroll'));
     expect(loads).toBe(1);
-    fixture.componentRef.setInput('items', [{ id: '1', name: 'Luke' }, { id: '2', name: 'Leia' }]);
+    fixture.componentRef.setInput('items', [
+      { id: '1', name: 'Luke' },
+      { id: '2', name: 'Leia' },
+    ]);
     await fixture.whenStable();
     viewport.dispatchEvent(new Event('scroll'));
     expect(loads).toBe(2);

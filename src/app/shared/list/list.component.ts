@@ -43,11 +43,4 @@ export class GeneralListComponent {
     this.requestedCount = -1;
     this.viewport().nativeElement.scrollTop = 0;
   }
-
-  focusItem(id: string) {
-    const rows =
-      this.viewport().nativeElement.querySelectorAll<HTMLButtonElement>('button[data-person-id]');
-    const row = Array.from(rows).find((row) => row.dataset['personId'] === id);
-    (row ?? this.viewport().nativeElement).focus({ preventScroll: true });
-  }
 }

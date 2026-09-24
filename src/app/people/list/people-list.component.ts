@@ -44,11 +44,12 @@ export class PeopleListComponent {
       filter((event) => event instanceof NavigationEnd),
       map(() => {
         const child = this.route.firstChild;
-        if (child) this.selectedId.set(child.snapshot.paramMap.get('id'));
-        return !!child;
+        const detailsOpen = child?.routeConfig?.path === ':id';
+        this.selectedId.set(detailsOpen ? child.snapshot.paramMap.get('id') : null);
+        return detailsOpen;
       }),
     ),
-    { initialValue: !!this.route.firstChild },
+    { initialValue: this.route.firstChild?.routeConfig?.path === ':id' },
   );
   readonly query = signal('');
   readonly visibleCount = signal(20);
@@ -98,14 +99,20 @@ export class PeopleListComponent {
   }
 
   async addPerson() {
-    if (!await this.router.navigateByUrl('/newPerson')) return;
+    const returnUrl = this.router.url;
+    await this.router.navigateByUrl('/people?newPerson=true');
 
+    const dialogUrl = this.router.url;
     this.dialog
-      .open(AddPersonDialogComponent, { width: '440px', maxWidth: 'calc(100vw - 32px)' })
+      .open(AddPersonDialogComponent, {
+        width: '440px',
+        maxWidth: 'calc(100vw - 32px)',
+        closeOnNavigation: true,
+      })
       .afterClosed()
       .subscribe(() => {
-        if (this.router.url === '/newPerson') {
-            this.router.navigateByUrl('/people', { replaceUrl: true });
+        if (this.router.url === dialogUrl) {
+          this.router.navigateByUrl(returnUrl, { replaceUrl: true });
         }
       });
   }
