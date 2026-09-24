@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PeopleService } from '../../people.service';
 import { PersonFields } from '../../person.model';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-person-dialog',
@@ -16,7 +15,6 @@ import { JsonPipe } from '@angular/common';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    JsonPipe
   ],
   templateUrl: './add-person-dialog.component.html',
 })

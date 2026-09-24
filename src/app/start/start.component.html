@@ -1,6 +1,65 @@
-<article class="max-w-3xl space-y-4 p-6" aria-labelledby="start-title">
-  <h1 class="text-3xl text-primary" id="start-title">Start</h1>
-  <p>Explore the people of the Star Wars universe.</p>
-  <p>Open People to browse names, filter the list, and view a person's details.</p>
-  <p>You can also add or delete people locally. These changes reset when you refresh the page.</p>
-</article>
+<main class="mx-auto max-w-4xl space-y-8 p-6" aria-labelledby="start-title">
+  <header class="space-y-3">
+    <h1 class="text-3xl font-semibold text-primary" id="start-title">Probeaufgabe Angular</h1>
+    <p>
+      Diese Anwendung setzt die Anforderungen der Aufgabe sowie die genannten Erweiterungen und
+      optionalen Techniken um. Als Datenquelle dient die
+      <a class="text-primary underline" href="https://swapi.info/" target="_blank" rel="noreferrer"
+        >Star Wars API</a
+      >.
+    </p>
+  </header>
+
+  <section class="space-y-3" aria-labelledby="requirements-title">
+    <h2 class="text-xl font-medium" id="requirements-title">Anforderungen</h2>
+    <ul class="space-y-3">
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span>Alle Personen aus dem People-Endpoint werden mit Namen in einer Liste angezeigt.</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span
+          >Ein Klick auf eine Person öffnet die Detailansicht mit Name, Größe, Gewicht, Geburtsjahr
+          und Geschlecht.</span
+        >
+      </li>
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span>Neue Personen lassen sich lokal hinzufügen; dafür wird die API nicht verwendet.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="space-y-3" aria-labelledby="extensions-title">
+    <h2 class="text-xl font-medium" id="extensions-title">Erweiterungen</h2>
+    <ul class="space-y-3">
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span>Einträge können aus der Liste gelöscht werden.</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span>Die Liste kann nach Namen gefiltert werden.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="space-y-3" aria-labelledby="techniques-title">
+    <h2 class="text-xl font-medium" id="techniques-title">Optionale Techniken</h2>
+    <ul class="space-y-3">
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span>Neue Einträge werden in einem Dialog erfasst.</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span>Namensliste und Detailansicht erscheinen nebeneinander; die Auswahl wird per Routing gesteuert.</span>
+      </li>
+      <li class="flex items-start gap-3">
+        <mat-icon class="mt-0.5 shrink-0 text-green-600" aria-label="Erfüllt">check_circle</mat-icon>
+        <span>Die Oberfläche verwendet Angular Material.</span>
+      </li>
+    </ul>
+  </section>
+</main>
