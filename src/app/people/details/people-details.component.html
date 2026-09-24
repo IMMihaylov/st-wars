@@ -1,0 +1,86 @@
+<article class="px-6 pb-6 text-body md:px-8 md:pb-8" aria-labelledby="details-title">
+  <header class="sticky top-0 z-10 -mx-6 flex items-center justify-between border-b border-outline/40 bg-accent-container px-6 py-2 font-medium text-primary md:-mx-8 md:px-8">
+    <span>Person details</span>
+    <button mat-icon-button aria-label="Close details" (click)="close()">✕</button>
+  </header>
+  @if (person(); as person) {
+    <h2 id="details-title" class="mt-7 mb-5 text-[28px] font-semibold  text-primary wrap-anywhere">{{ person.name }}</h2>
+    <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">General information</h3>
+    <app-details-fields [data]="person" [fields]="personFields" label="Person details" />
+    @if (details(); as details) {
+      @if (person.homeworld) {
+        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Homeworld</h3>
+        @if (details.homeworld.data; as homeworld) {
+          <app-details-fields [data]="homeworld" [fields]="planetFields" label="Homeworld details" />
+        } @else if (details.homeworld.status === 'loading') {
+          <app-skeleton label="Loading homeworld" data-loading="homeworld" />
+        }
+        @if (details.homeworld.status === 'error') {
+          <p role="status">Could not load homeworld.</p>
+        }
+      }
+      @if (person.species?.length) {
+        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Species</h3>
+        @if (details.species.data.length > 0) {
+          <div class="divide-y divide-outline/40">
+            @for (species of details.species.data; track species.url) {
+              <section>
+                <h4 class="item-heading pt-4 text-base font-medium text-primary wrap-anywhere">{{ species.name }}</h4>
+                <app-details-fields [data]="species" [fields]="speciesFields" [label]="species.name" />
+              </section>
+            }
+          </div>
+        } @else if (details.species.status === 'loading') {
+          <app-skeleton label="Loading species" data-loading="species" />
+        }
+        @if (details.species.status === 'error') {
+          <p role="status">Could not load some species.</p>
+        }
+      }
+      @if (person.vehicles?.length) {
+        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Vehicles</h3>
+        @if (details.vehicles.data.length > 0) {
+          <div class="divide-y divide-outline/40">
+            @for (vehicle of details.vehicles.data; track vehicle.url) {
+              <section>
+                <h4 class="item-heading pt-4 text-base font-medium text-primary wrap-anywhere">{{ vehicle.name }}</h4>
+                <app-details-fields [data]="vehicle" [fields]="vehicleFields" [label]="vehicle.name" />
+              </section>
+            }
+          </div>
+        } @else if (details.vehicles.status === 'loading') {
+          <app-skeleton label="Loading vehicles" data-loading="vehicles" />
+        }
+        @if (details.vehicles.status === 'error') {
+          <p role="status">Could not load some vehicles.</p>
+        }
+      }
+      @if (person.films?.length) {
+        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Films</h3>
+        @if (details.films.data.length > 0) {
+          <mat-list role="list" aria-label="Films" class="py-0!">
+            @for (film of details.films.data; track film.url) {
+              <mat-list-item role="listitem" class="film-row">
+                <span matListItemTitle class="film-title">{{ film.title }}</span>
+                <span matListItemMeta>{{ film.release_date | date: 'yyyy' }}</span>
+              </mat-list-item>
+            }
+          </mat-list>
+        } @else if (details.films.status === 'loading') {
+          <app-skeleton label="Loading films" data-loading="films" />
+        }
+        @if (details.films.status === 'error') {
+          <p role="status">Could not load some films.</p>
+        }
+      }
+    }
+    <footer class="mt-8 border-t border-outline/40 pt-5">
+      <button mat-stroked-button color="warn" data-action="delete" (click)="deletePerson()">
+        Delete person
+      </button>
+    </footer>
+  } @else {
+    <h2 id="details-title" class="my-7 text-[28px] leading-9 text-primary wrap-anywhere">Person not found</h2>
+    <p>This person is no longer in the list.</p>
+  }
+</article>

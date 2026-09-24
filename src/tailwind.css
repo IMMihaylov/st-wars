@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* The demo's azure/blue Material palette, exposed as Tailwind utilities. */
+@theme {
+  --color-primary: #005cbb;
+  --color-primary-container: #d7e3ff;
+  --color-accent: #0000ff;
+  --color-accent-container: #e0e0ff;
+  --color-outline: #c4c6d0;
+  --color-body: #44474e;
+}

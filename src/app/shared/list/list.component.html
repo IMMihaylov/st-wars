@@ -1,0 +1,18 @@
+<section #viewport class="h-full overflow-y-auto" (scroll)="onScroll()" aria-label="People list" tabindex="0">
+  @if (items().length) {
+    <ul>
+      @for (item of items(); track item.id) {
+        <li>
+          <button class="flex min-h-14 w-full cursor-pointer items-center gap-4 border-b border-outline px-6 py-4 text-left hover:bg-primary-container focus-visible:bg-primary-container aria-[current=true]:bg-primary aria-[current=true]:text-white md:px-8"
+            type="button" [attr.data-person-id]="item.id" [attr.aria-current]="item.id === selectedId() ? 'true' : null" (click)="itemSelected.emit(item.id)">
+            @for (column of columns(); track column.key) {
+              <span class="min-w-0 flex-1 truncate first:flex-[1.5]">{{ item[column.key] | formatValue: column.key }}</span>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="p-6" role="status">No people found.</p>
+  }
+</section>

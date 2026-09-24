@@ -1,0 +1,8 @@
+<mat-list role="list" [attr.aria-label]="label()" class="fields-list">
+  @for (field of fields(); track field.key) {
+    <mat-list-item role="listitem" class="field-row">
+      <span matListItemTitle class="field-label text-sm font-medium text-primary">{{ field.label }}</span>
+      <span matListItemLine class="field-value text-[15px] font-medium text-body">{{ value(field) }}</span>
+    </mat-list-item>
+  }
+</mat-list>

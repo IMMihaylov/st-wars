@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+
+$colors: (primary: mat.$azure-palette, tertiary: mat.$blue-palette);
+
+html {
+  color-scheme: light;
+  @include mat.theme((color: $colors, typography: Roboto, density: 0));
+}
+
+// M3 needs explicit variants for the button color input.
+$theme: mat.define-theme((color: $colors));
+
+[color='accent'] {
+  @include mat.button-color($theme, $color-variant: tertiary);
+}
+
+[color='warn'] {
+  @include mat.button-color($theme, $color-variant: error);
+}

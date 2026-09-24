@@ -1,0 +1,43 @@
+:host {
+  container-type: inline-size;
+}
+
+.fields-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 24px;
+  padding: 8px 0;
+}
+
+.field-row {
+  height: auto;
+  min-height: 72px;
+  padding: 12px 0;
+}
+
+.field-label,
+.field-value {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  letter-spacing: normal;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+}
+
+.field-label {
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.field-value {
+  line-height: 24px;
+}
+
+@container (min-width: 400px) {
+  .fields-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
