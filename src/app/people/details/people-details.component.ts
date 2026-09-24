@@ -34,12 +34,20 @@ export class PeopleDetailsComponent {
     this.peopleService.people().find((person) => person.id === this.params().get('id')),
   );
   readonly details = signal<PersonDetails | null>(null);
+  readonly personImage = signal<string | null>(null);
 
   constructor() {
     effect((onCleanup) => {
       const person = this.person();
       this.details.set(null);
+      this.personImage.set(null);
       if (!person || person.id.startsWith('local-')) return;
+
+      const imageSubscription = this.peopleService.loadPersonImage(person.id).subscribe({
+        next: (image) => this.personImage.set(image),
+        error: () => this.personImage.set(null),
+      });
+      onCleanup(() => imageSubscription.unsubscribe());
 
       const subscription = this.peopleService.loadPersonDetails(person).subscribe({
         next: (data) => this.details.set(data),
@@ -47,6 +55,10 @@ export class PeopleDetailsComponent {
       });
       onCleanup(() => subscription.unsubscribe());
     });
+  }
+
+  hidePersonImage() {
+    this.personImage.set(null);
   }
 
   close() {

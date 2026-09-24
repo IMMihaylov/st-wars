@@ -6,6 +6,7 @@ import { Person, PersonFields, Film, Species, Vehicle, Planet, PersonDetails, Lo
 @Injectable({ providedIn: 'root' })
 export class PeopleService {
   private readonly http = inject(HttpClient);
+  private readonly akababBaseUrl = 'https://akabab.github.io/starwars-api/api';
   private readonly entries = signal<readonly Person[]>([]);
   private readonly loadingPeople = signal(false);
   private readonly peopleLoadFailure = signal<string | null>(null);
@@ -55,7 +56,7 @@ export class PeopleService {
   }
 
   loadPersonDetails(person: Person): Observable<PersonDetails> {
-    
+
     return combineLatest({
       films: this.loadRelated<Film>(person.films ?? []),
       homeworld: this.loadRelated<Planet>(person.homeworld ? [person.homeworld] : []).pipe(
@@ -84,5 +85,10 @@ export class PeopleService {
       // Seed each section so other sections can emit without waiting for it.
       startWith<LoadState<T[]>>({ status: 'loading', data: [] }),
     );
+  }
+  loadPersonImage(id: string): Observable<string | null> {
+    return this.http
+      .get<{ image?: string }>(`${this.akababBaseUrl}/id/${id}.json`)
+      .pipe(map((character) => character.image ?? null));
   }
 }
