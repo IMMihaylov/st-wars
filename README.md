@@ -2,6 +2,7 @@
 
 An Angular 22 application implementing the people-list and detail-view assignment with data from the [SWAPI](https://swapi.info/).
 
+Live site: [https://immihaylov.github.io/st-wars/](https://immihaylov.github.io/st-wars/)
 
 ## Run locally
 
