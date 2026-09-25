@@ -5,6 +5,7 @@ import { App } from '../app';
 import { appConfig } from '../app.config';
 
 const endpoint = 'https://swapi.info/api/people';
+const imageUrl = (id: string) => `https://akabab.github.io/starwars-api/api/id/${id}.json`;
 
 describe('People navigation', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -77,6 +78,7 @@ describe('People navigation', () => {
     ]));
     await navigation;
     await fixture.whenStable();
+    http.expectOne(imageUrl('1')).flush({});
     expect(fixture.nativeElement.querySelector('app-people-details h2')?.textContent).toContain('Luke');
     const selectedRows = () => [...fixture.nativeElement.querySelectorAll('[data-person-id][aria-current="true"]')]
       .map(row => row.getAttribute('data-person-id'));
@@ -90,6 +92,7 @@ describe('People navigation', () => {
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('app-people-details h2')?.textContent).toContain('Leia');
     expect(selectedRows()).toEqual(['2']);
+    http.expectOne(imageUrl('2')).flush({});
     fixture.nativeElement.querySelector('[data-action="delete"]').click();
     await fixture.whenStable();
     const confirm = document.querySelector<HTMLButtonElement>('mat-dialog-container button[color="warn"]');
@@ -100,6 +103,7 @@ describe('People navigation', () => {
     expect(fixture.nativeElement.querySelectorAll('[data-person-id]').length).toBe(1);
     await router.navigateByUrl('/people/1');
     await fixture.whenStable();
+    http.expectOne(imageUrl('1')).flush({});
     fixture.nativeElement.querySelector('[aria-label="Close details"]').click();
     await fixture.whenStable();
     expect(router.url).toBe('/people');

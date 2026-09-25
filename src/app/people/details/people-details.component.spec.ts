@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { PeopleDetailsComponent } from './people-details.component';
 import { PeopleService } from '../people.service';
 
+const imageUrl = (id: string) => `https://akabab.github.io/starwars-api/api/id/${id}.json`;
+
 describe('Related details lifecycle', () => {
   const fields = { height: '172', mass: '77', birth_year: '19BBY', gender: 'male' };
   let params: BehaviorSubject<ReturnType<typeof convertToParamMap>>;
@@ -28,21 +30,26 @@ describe('Related details lifecycle', () => {
   it('cancels old requests on selection change and outstanding requests on destroy', async () => {
     const fixture = TestBed.createComponent(PeopleDetailsComponent);
     await fixture.whenStable();
+    const oldImage = http.expectOne(imageUrl('1'));
     const oldPlanet = http.expectOne('/planet/1');
     const oldFilm = http.expectOne('/film/1');
     params.next(convertToParamMap({ id: '2' }));
     await fixture.whenStable();
+    const currentImage = http.expectOne(imageUrl('2'));
     const current = http.expectOne('/planet/2');
+    expect(oldImage.cancelled).toBe(true);
     expect(oldPlanet.cancelled).toBe(true);
     expect(oldFilm.cancelled).toBe(true);
     expect(fixture.nativeElement.querySelector('h2').textContent).toContain('Leia');
     fixture.destroy();
+    expect(currentImage.cancelled).toBe(true);
     expect(current.cancelled).toBe(true);
   });
 
   it('shows completed data alongside skeletons and replaces failed skeletons with errors', async () => {
     const fixture = TestBed.createComponent(PeopleDetailsComponent);
     await fixture.whenStable();
+    http.expectOne(imageUrl('1')).flush({});
     const planet = http.expectOne('/planet/1');
     const film = http.expectOne('/film/1');
     planet.flush({ name: 'Tatooine' });
@@ -59,10 +66,12 @@ describe('Related details lifecycle', () => {
     const local = TestBed.inject(PeopleService).addPerson({ ...fields, name: 'Local' });
     const fixture = TestBed.createComponent(PeopleDetailsComponent);
     await fixture.whenStable();
+    const image = http.expectOne(imageUrl('1'));
     http.expectOne('/planet/1').flush({ name: 'Tatooine' });
     const film = http.expectOne('/film/1');
     params.next(convertToParamMap({ id: local.id }));
     await fixture.whenStable();
+    expect(image.cancelled).toBe(true);
     expect(film.cancelled).toBe(true);
     expect(fixture.componentInstance.details()).toBeNull();
     params.next(convertToParamMap({ id: 'missing' }));
