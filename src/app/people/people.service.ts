@@ -6,7 +6,9 @@ import { Person, PersonFields, Film, Species, Vehicle, Planet, PersonDetails, Lo
 @Injectable({ providedIn: 'root' })
 export class PeopleService {
   private readonly http = inject(HttpClient);
+  /** this should be based ona env. variable so that if we have different environmets the url iss going to pull data correctly ${prtocol}{domain}/starwars-api/api*/
   private readonly akababBaseUrl = 'https://akabab.github.io/starwars-api/api';
+  private readonly swapiBaseUrl = 'https://swapi.info/api';
   private readonly entries = signal<readonly Person[]>([]);
   private readonly loadingPeople = signal(false);
   private readonly peopleLoadFailure = signal<string | null>(null);
@@ -19,13 +21,13 @@ export class PeopleService {
     this.peopleLoadFailure.set(null);
     this.loadingPeople.set(true);
 
-    return this.http.get<PersonFields[]>('https://swapi.info/api/people').pipe(
+    return this.http.get<PersonFields[]>(`${this.swapiBaseUrl}/people`).pipe(
       map((people) =>
         people.map((person) => {
           const url = person.url || '';
           return {
             ...person,
-            id: url.split('/').filter(Boolean).pop()!,
+            id: url.split('/').filter(Boolean).pop()!, // possibly needs a fallback here like || crypto.randomUUID()
           };
         }),
       ),

@@ -18,6 +18,7 @@ export class DetailsFieldsComponent<T extends object> {
   readonly fields = input.required<readonly DetailField<T>[]>();
   readonly label = input('Details');
 
+  /** would be a pipe in an ideal world */
   value(field: DetailField<T>): string {
     const value = this.data()[field.key];
     return value == null || value === '' ? '—' : String(value);
