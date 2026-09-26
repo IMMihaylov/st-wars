@@ -44,7 +44,7 @@
         @if (details.films.data.length) {
           <mat-list role="list" aria-label="Films" class="py-0!">
             @for (film of details.films.data; track film.url) {
-              <mat-list-item role="listitem">
+              <mat-list-item role="listitem" class="px-0!">
                 <span matListItemTitle class="flex items-center gap-2">
                   @if (movieId(film); as id) {
                     <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-full! p-0! leading-none!" [routerLink]="['/movies', id]" [attr.aria-label]="'Navigate to movie: ' + film.title" matTooltip="navigate to movie" matTooltipPosition="above">
