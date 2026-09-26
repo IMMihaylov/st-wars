@@ -53,7 +53,18 @@
           <div class="divide-y divide-outline/40">
             @for (vehicle of details.vehicles.data; track vehicle.url) {
               <section>
-                <h4 class="item-heading pt-4 text-base font-medium text-primary wrap-anywhere">{{ vehicle.name }}</h4>
+                <div class="flex flex-wrap items-center gap-2 pt-4">
+                  @if (vehicleId(vehicle); as id) {
+                    <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-full! p-0! leading-none!" [routerLink]="['/vehicles', id]" [attr.aria-label]="'Navigate to vehicle: ' + vehicle.name" matTooltip="navigate to vehicle" matTooltipPosition="above">
+                      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M12 2.5c2.65 2.15 4.2 5.86 4.55 10.07l4.15 3.24v2.34l-6.12-2.1c-.54 1.5-1.37 2.91-2.58 4.2-1.21-1.29-2.04-2.7-2.58-4.2l-6.12 2.1v-2.34l4.15-3.24C7.8 8.36 9.35 4.65 12 2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                        <circle cx="12" cy="10" r="1.25" fill="currentColor" />
+                        <path d="M10.2 15.7h3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                      </svg>
+                    </a>
+                  }
+                  <h4 class="item-heading text-base font-medium text-primary wrap-anywhere">{{ vehicle.name }}</h4>
+                </div>
                 <app-details-fields [data]="vehicle" [fields]="vehicleFields" [label]="vehicle.name" />
               </section>
             }

@@ -29,7 +29,7 @@ describe('People navigation', () => {
     await firstNavigation;
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('h1').textContent).toContain('People');
-    expect(fixture.nativeElement.querySelectorAll('[data-person-id]')).toHaveLength(1);
+    expect(fixture.nativeElement.querySelectorAll('[data-item-id]')).toHaveLength(1);
 
     await router.navigateByUrl('/start');
     const secondNavigation = router.navigateByUrl('/people');
@@ -39,7 +39,7 @@ describe('People navigation', () => {
     ]));
     await secondNavigation;
     await fixture.whenStable();
-    expect(fixture.nativeElement.querySelectorAll('[data-person-id]')).toHaveLength(2);
+    expect(fixture.nativeElement.querySelectorAll('[data-item-id]')).toHaveLength(2);
   });
 
   it('shows a People-local error with a reload action and recovers', async () => {
@@ -64,6 +64,6 @@ describe('People navigation', () => {
     ]));
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
-    expect(fixture.nativeElement.querySelectorAll('[data-person-id]')).toHaveLength(1);
+    expect(fixture.nativeElement.querySelectorAll('[data-item-id]')).toHaveLength(1);
   });
 });

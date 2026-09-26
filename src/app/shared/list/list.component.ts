@@ -22,6 +22,8 @@ export class GeneralListComponent {
   readonly columns = input<ColumnConfig[]>([{ key: 'name', label: 'Name' }]);
   readonly hasMore = input(false);
   readonly selectedId = input<string | null>(null);
+  readonly listLabel = input.required<string>();
+  readonly emptyMessage = input.required<string>();
   readonly itemSelected = output<string>();
   readonly loadMore = output<void>();
   private readonly viewport = viewChild.required<ElementRef<HTMLElement>>('viewport');

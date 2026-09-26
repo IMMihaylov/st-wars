@@ -5,6 +5,8 @@ describe('General list', () => {
   it('emits selection and loads once per rendered batch only at the bottom', async () => {
     const fixture = TestBed.createComponent(GeneralListComponent);
     fixture.componentRef.setInput('items', [{ id: '1', name: 'Luke' }]);
+    fixture.componentRef.setInput('listLabel', 'People list');
+    fixture.componentRef.setInput('emptyMessage', 'No people found.');
     fixture.componentRef.setInput('hasMore', true);
     const selected: string[] = [];
     let loads = 0;

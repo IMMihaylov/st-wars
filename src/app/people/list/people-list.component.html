@@ -35,7 +35,7 @@
           </button>
         </div>
       } @else {
-        <app-list [items]="visible()" [columns]="displayFields" [selectedId]="detailsOpen() ? selectedId() : null" [hasMore]="hasMore()" (loadMore)="loadMore()" (itemSelected)="select($event)" />
+        <app-list listLabel="People list" emptyMessage="No people found." [items]="visible()" [columns]="displayFields" [selectedId]="detailsOpen() ? selectedId() : null" [hasMore]="hasMore()" (loadMore)="loadMore()" (itemSelected)="select($event)" />
       }
     </section>
   </mat-drawer-content>

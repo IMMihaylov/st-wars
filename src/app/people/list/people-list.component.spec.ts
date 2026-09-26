@@ -29,7 +29,7 @@ describe('People list', () => {
     );
     const fixture = TestBed.createComponent(PeopleListComponent);
     await fixture.whenStable();
-    const rows = () => fixture.nativeElement.querySelectorAll('[data-person-id]');
+    const rows = () => fixture.nativeElement.querySelectorAll('[data-item-id]');
     expect(rows().length).toBe(20);
     const viewport: HTMLElement = fixture.nativeElement.querySelector('[aria-label="People list"]');
     Object.defineProperties(viewport, {

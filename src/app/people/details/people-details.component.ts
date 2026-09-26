@@ -1,20 +1,21 @@
 import { Component, computed, inject, signal, effect } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
 import { PeopleService } from '../people.service';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
-import { PersonDetails } from '../person.model';
+import { PersonDetails, Vehicle } from '../person.model';
 import { DetailsFieldsComponent } from '../../shared/details-fields/details-fields.component';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
 import { PERSON_DETAIL_FIELDS, PLANET_DETAIL_FIELDS, SPECIES_DETAIL_FIELDS, VEHICLE_DETAIL_FIELDS } from './details-fields.config';
 
 @Component({
   selector: 'app-people-details',
-  imports: [MatButtonModule, MatListModule, DatePipe, DetailsFieldsComponent, SkeletonComponent],
+  imports: [MatButtonModule, MatListModule, MatTooltipModule, RouterLink, DatePipe, DetailsFieldsComponent, SkeletonComponent],
   templateUrl: './people-details.component.html',
   styleUrl: './people-details.component.scss',
 })
@@ -59,6 +60,10 @@ export class PeopleDetailsComponent {
 
   hidePersonImage() {
     this.personImage.set(null);
+  }
+
+  vehicleId(vehicle: Vehicle): string | null {
+    return vehicle.url?.split('/').filter(Boolean).pop() ?? null;
   }
 
   close() {
