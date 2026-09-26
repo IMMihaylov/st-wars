@@ -1,10 +1,11 @@
-<main class="mx-auto max-w-4xl space-y-8 p-6" aria-labelledby="start-title">
+<div class="relative isolate grid min-h-full grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(24rem,0.9fr)]">
+  <main class="relative z-10 mx-auto w-full max-w-4xl space-y-8 p-6 xl:mx-0 xl:max-w-none" aria-labelledby="start-title">
   <header class="space-y-3">
     <h1 class="text-3xl font-semibold text-primary" id="start-title">Probeaufgabe Angular</h1>
     <p>
       Diese Anwendung setzt die Anforderungen der Aufgabe sowie die genannten Erweiterungen und
       optionalen Techniken um. Als Datenquelle dient die
-      <a class="text-primary underline" href="https://swapi.info/" target="_blank" rel="noreferrer"
+      <a class="pointer-events-auto text-primary underline" href="https://swapi.info/" target="_blank" rel="noreferrer"
         >Star Wars API</a
       >.
     </p>
@@ -63,3 +64,5 @@
     </ul>
   </section>
 </main>
+  <app-vader-figure />
+</div>
