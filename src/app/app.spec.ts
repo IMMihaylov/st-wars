@@ -21,13 +21,17 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('opens Start with exactly two navigation links and no API request', async () => {
+  it('opens Start with all three navigation links and no API request', async () => {
     const fixture = TestBed.createComponent(App);
     await TestBed.inject(Router).navigateByUrl('/');
     await fixture.whenStable();
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('h1')?.textContent).toContain('Probeaufgabe Angular');
-    expect([...element.querySelectorAll('nav a')].map(a => a.textContent?.trim())).toEqual(['Start', 'People']);
+    expect([...element.querySelectorAll('nav a')].map(a => a.textContent?.trim())).toEqual([
+      'Start',
+      'People',
+      'Vehicles',
+    ]);
     TestBed.inject(HttpTestingController).expectNone(() => true);
   });
 
