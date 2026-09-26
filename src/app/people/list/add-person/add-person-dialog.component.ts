@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormField, FormRoot, form, pattern, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -22,6 +22,13 @@ type AddPersonFormModel = Pick<PersonFields, 'name' | 'height' | 'mass' | 'birth
   templateUrl: './add-person-dialog.component.html',
 })
 export class AddPersonDialogComponent {
+
+  constructor() {
+       effect(() => {
+      //  console.log(this.formModel(), this.form().valid());
+       // You can react to form value changes here if needed
+     });
+  }
   private readonly service = inject(PeopleService);
   private readonly dialog = inject(MatDialogRef<AddPersonDialogComponent>);
   readonly fields: { key: keyof AddPersonFormModel; label: string }[] = [

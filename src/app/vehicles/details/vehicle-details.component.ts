@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
+import { Film } from '../../people/person.model';
 import { DetailsFieldsComponent } from '../../shared/details-fields/details-fields.component';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
 import { PERSON_DETAIL_FIELDS, VEHICLE_DETAIL_FIELDS } from '../../people/details/details-fields.config';
@@ -41,6 +42,10 @@ export class VehicleDetailsComponent {
       return [{ id, label: person?.name ?? `Pilot ${id}`, person }];
     });
   });
+
+  movieId(film: Film): string | null {
+    return film.url?.split('/').filter(Boolean).pop() ?? null;
+  }
 
   constructor() {
     effect((onCleanup) => {

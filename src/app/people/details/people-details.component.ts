@@ -8,7 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
 import { PeopleService } from '../people.service';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
-import { PersonDetails, Vehicle } from '../person.model';
+import { Film, PersonDetails, Vehicle } from '../person.model';
 import { DetailsFieldsComponent } from '../../shared/details-fields/details-fields.component';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
 import { PERSON_DETAIL_FIELDS, PLANET_DETAIL_FIELDS, SPECIES_DETAIL_FIELDS, VEHICLE_DETAIL_FIELDS } from './details-fields.config';
@@ -64,6 +64,10 @@ export class PeopleDetailsComponent {
 
   vehicleId(vehicle: Vehicle): string | null {
     return vehicle.url?.split('/').filter(Boolean).pop() ?? null;
+  }
+
+  movieId(film: Film): string | null {
+    return film.url?.split('/').filter(Boolean).pop() ?? null;
   }
 
   close() {

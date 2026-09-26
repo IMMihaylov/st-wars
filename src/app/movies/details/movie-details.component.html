@@ -1,0 +1,67 @@
+<article class="px-6 pb-6 text-body md:px-8 md:pb-8" aria-labelledby="details-title">
+  <header class="sticky top-0 z-10 -mx-6 flex items-center justify-between border-b border-outline/40 bg-accent-container px-6 py-2 font-medium text-primary md:-mx-8 md:px-8">
+    <span>Movie details</span>
+    <button mat-icon-button aria-label="Close details" (click)="close()">&#10005;</button>
+  </header>
+  @if (movie(); as movie) {
+    <h2 id="details-title" class="mt-7 mb-5 text-[28px] font-semibold text-primary wrap-anywhere">{{ movie.title }}</h2>
+    <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">General information</h3>
+    <app-details-fields [data]="movie" [fields]="movieFields" label="Movie details" />
+    @if (movie.opening_crawl) {
+      <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Opening crawl</h3>
+      <p class="whitespace-pre-line py-3">{{ movie.opening_crawl }}</p>
+    }
+    @if (movie.characters.length) {
+      <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">People</h3>
+      <div class="divide-y divide-outline/40" aria-label="Movie people">
+        @for (person of peopleLinks(); track person.id) {
+          <section class="flex flex-wrap items-center gap-2 py-3">
+            <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-full! p-0! leading-none!" [routerLink]="['/people', person.id]" [attr.aria-label]="'Navigate to person: ' + person.label" matTooltip="navigate to people" matTooltipPosition="above">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="7.5" r="3.25" stroke="currentColor" stroke-width="1.6" />
+                <path d="M5.5 20v-1.15c0-3.05 2.9-5.35 6.5-5.35s6.5 2.3 6.5 5.35V20h-13Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <h4 class="text-base font-medium text-primary wrap-anywhere">{{ person.label }}</h4>
+          </section>
+        }
+      </div>
+      @if (details(); as details) {
+        @if (details.people.status === 'loading') {
+          <app-skeleton label="Loading people" data-loading="people" />
+        }
+        @if (details.people.status === 'error') {
+          <p role="status">Could not load some people.</p>
+        }
+      }
+    }
+    @if (movie.vehicles.length) {
+      <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Vehicles</h3>
+      <div class="divide-y divide-outline/40" aria-label="Movie vehicles">
+        @for (vehicle of vehicleLinks(); track vehicle.id) {
+          <section class="flex flex-wrap items-center gap-2 py-3">
+            <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-full! p-0! leading-none!" [routerLink]="['/vehicles', vehicle.id]" [attr.aria-label]="'Navigate to vehicle: ' + vehicle.label" matTooltip="navigate to vehicle" matTooltipPosition="above">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M12 2.5c2.65 2.15 4.2 5.86 4.55 10.07l4.15 3.24v2.34l-6.12-2.1c-.54 1.5-1.37 2.91-2.58 4.2-1.21-1.29-2.04-2.7-2.58-4.2l-6.12 2.1v-2.34l4.15-3.24C7.8 8.36 9.35 4.65 12 2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                <circle cx="12" cy="10" r="1.25" fill="currentColor" />
+                <path d="M10.2 15.7h3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+              </svg>
+            </a>
+            <h4 class="text-base font-medium text-primary wrap-anywhere">{{ vehicle.label }}</h4>
+          </section>
+        }
+      </div>
+      @if (details(); as details) {
+        @if (details.vehicles.status === 'loading') {
+          <app-skeleton label="Loading vehicles" data-loading="vehicles" />
+        }
+        @if (details.vehicles.status === 'error') {
+          <p role="status">Could not load some vehicles.</p>
+        }
+      }
+    }
+  } @else {
+    <h2 id="details-title" class="my-7 text-[28px] leading-9 text-primary wrap-anywhere">Movie not found</h2>
+    <p>This movie is no longer in the list.</p>
+  }
+</article>

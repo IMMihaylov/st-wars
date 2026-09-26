@@ -1,12 +1,16 @@
 .film-row {
   height: auto;
   min-height: 56px;
-  padding: 12px 0;
+  padding: 16px 0 12px;
   border-bottom: 1px solid var(--color-outline);
 
   &:last-child {
     border-bottom: 0;
   }
+}
+
+mat-list-item.film-row {
+  padding-inline: 0;
 }
 
 .film-title {

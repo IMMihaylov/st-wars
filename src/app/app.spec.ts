@@ -21,7 +21,7 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('opens Start with all three navigation links and no API request', async () => {
+  it('opens Start with all four navigation links and no API request', async () => {
     const fixture = TestBed.createComponent(App);
     await TestBed.inject(Router).navigateByUrl('/');
     await fixture.whenStable();
@@ -31,6 +31,7 @@ describe('App', () => {
       'Start',
       'People',
       'Vehicles',
+      'Movies',
     ]);
     TestBed.inject(HttpTestingController).expectNone(() => true);
   });

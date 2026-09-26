@@ -62,6 +62,25 @@ describe('Related details lifecycle', () => {
     expect(fixture.nativeElement.querySelector('[data-loading]')).toBeNull();
   });
 
+  it('links each related film to its movie details', async () => {
+    const fixture = TestBed.createComponent(PeopleDetailsComponent);
+    await fixture.whenStable();
+    http.expectOne(imageUrl('1')).flush({});
+    http.expectOne('/planet/1').flush({ name: 'Tatooine' });
+    http.expectOne('/film/1').flush({
+      title: 'A New Hope',
+      release_date: '1977-05-25',
+      url: '/films/1',
+    });
+    await fixture.whenStable();
+
+    const link: HTMLAnchorElement = fixture.nativeElement.querySelector(
+      '[aria-label="Navigate to movie: A New Hope"]',
+    );
+    expect(link).not.toBeNull();
+    expect(link.getAttribute('href')).toBe('/movies/1');
+  });
+
   it('clears details and cancels requests when navigating to a local or missing person', async () => {
     const local = TestBed.inject(PeopleService).addPerson({ ...fields, name: 'Local' });
     const fixture = TestBed.createComponent(PeopleDetailsComponent);
