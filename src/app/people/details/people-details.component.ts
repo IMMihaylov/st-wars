@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
 import { PeopleService } from '../people.service';
@@ -15,7 +16,7 @@ import { PERSON_DETAIL_FIELDS, PLANET_DETAIL_FIELDS, SPECIES_DETAIL_FIELDS, VEHI
 
 @Component({
   selector: 'app-people-details',
-  imports: [MatButtonModule, MatListModule, MatTooltipModule, RouterLink, DatePipe, DetailsFieldsComponent, SkeletonComponent],
+  imports: [MatButtonModule, MatListModule, MatMenuModule, MatTooltipModule, RouterLink, DatePipe, DetailsFieldsComponent, SkeletonComponent],
   templateUrl: './people-details.component.html',
   styleUrl: './people-details.component.scss',
 })
