@@ -1,20 +1,27 @@
-<article class="px-6 pb-6 text-body md:px-8 md:pb-8" aria-labelledby="details-title">
-  <header class="sticky top-0 z-10 -mx-6 flex items-center justify-between border-b border-outline/40 bg-accent-container px-6 py-2 font-medium text-primary md:-mx-8 md:px-8">
-    <span>Person details</span>
-    <button mat-icon-button aria-label="Close details" (click)="close()">✕</button>
+<article class="bg-surface px-6 pb-6 text-body md:px-8 md:pb-8" aria-labelledby="details-title">
+  <header class="sticky top-0 z-10 -mx-6 flex items-center justify-between border-b border-outline/60 bg-surface/95 px-6 py-3 font-medium text-primary backdrop-blur md:-mx-8 md:px-8">
+    <span class="text-[11px] font-semibold uppercase tracking-[0.16em] text-body">Person record</span>
+    <button mat-icon-button aria-label="Close details" (click)="close()">
+      <svg class="size-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+    </button>
   </header>
   @if (person(); as person) {
-    <div class="mt-7 mb-5 flex flex-wrap items-center justify-between gap-4">
+    <div class="mt-6 mb-7 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-outline/60 bg-surface-muted p-4">
       <div class="person-heading-copy flex min-w-0 items-center gap-4">
         @if (personImage(); as imageUrl) {
           <img
-            class="h-16 w-16 shrink-0 rounded-full object-cover"
+            class="size-16 shrink-0 rounded-xl border border-outline/60 bg-surface object-cover"
             [src]="imageUrl"
             [alt]="'Portrait of ' + person.name"
             (error)="hidePersonImage()"
           />
         }
-        <h2 id="details-title" class="min-w-0 text-[28px] font-semibold text-primary wrap-anywhere">{{ person.name }}</h2>
+        <div class="min-w-0">
+          <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Character</p>
+          <h2 id="details-title" class="min-w-0 text-2xl font-semibold leading-8 tracking-tight text-primary wrap-anywhere">{{ person.name }}</h2>
+        </div>
       </div>
       <div class="flex shrink-0 items-center gap-2">
         <button mat-stroked-button type="button" class="person-edit-button">
@@ -75,27 +82,27 @@
         </mat-menu>
       </div>
     </div>
-    <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">General information</h3>
+    <h3 class="detail-section-heading">General information</h3>
     <app-details-fields [data]="person" [fields]="personFields" label="Person details" />
     @if (details(); as details) {
       @if (person.homeworld) {
-        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Homeworld</h3>
+        <h3 class="detail-section-heading">Homeworld</h3>
         @if (details.homeworld.data; as homeworld) {
           <app-details-fields [data]="homeworld" [fields]="planetFields" label="Homeworld details" />
         } @else if (details.homeworld.status === 'loading') {
           <app-skeleton label="Loading homeworld" data-loading="homeworld" />
         }
         @if (details.homeworld.status === 'error') {
-          <p role="status">Could not load homeworld.</p>
+          <p role="status" class="detail-load-error">Could not load homeworld.</p>
         }
       }
       @if (person.species?.length) {
-        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Species</h3>
+        <h3 class="detail-section-heading">Species</h3>
         @if (details.species.data.length > 0) {
-          <div class="divide-y divide-outline/40">
+          <div class="detail-related-list">
             @for (species of details.species.data; track species.url) {
-              <section>
-                <h4 class="item-heading pt-4 text-base font-medium text-primary wrap-anywhere">{{ species.name }}</h4>
+              <section class="detail-related-card">
+                <h4 class="item-heading mb-2 text-sm font-semibold text-primary wrap-anywhere">{{ species.name }}</h4>
                 <app-details-fields [data]="species" [fields]="speciesFields" [label]="species.name" />
               </section>
             }
@@ -104,18 +111,18 @@
           <app-skeleton label="Loading species" data-loading="species" />
         }
         @if (details.species.status === 'error') {
-          <p role="status">Could not load some species.</p>
+          <p role="status" class="detail-load-error">Could not load some species.</p>
         }
       }
       @if (person.vehicles?.length) {
-        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Vehicles</h3>
+        <h3 class="detail-section-heading">Vehicles</h3>
         @if (details.vehicles.data.length > 0) {
-          <div class="divide-y divide-outline/40">
+          <div class="detail-related-list">
             @for (vehicle of details.vehicles.data; track vehicle.url) {
-              <section>
-                <div class="flex flex-wrap items-center gap-2 pt-4">
+              <section class="detail-related-card">
+                <div class="flex flex-wrap items-center gap-2">
                   @if (vehicleId(vehicle); as id) {
-                    <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-full! p-0! leading-none!" [routerLink]="['/vehicles', id]" [attr.aria-label]="'Navigate to vehicle: ' + vehicle.name" matTooltip="navigate to vehicle" matTooltipPosition="above">
+                    <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-xl! p-0! leading-none!" [routerLink]="['/vehicles', id]" [attr.aria-label]="'Navigate to vehicle: ' + vehicle.name" matTooltip="navigate to vehicle" matTooltipPosition="above">
                       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                         <path d="M12 2.5c2.65 2.15 4.2 5.86 4.55 10.07l4.15 3.24v2.34l-6.12-2.1c-.54 1.5-1.37 2.91-2.58 4.2-1.21-1.29-2.04-2.7-2.58-4.2l-6.12 2.1v-2.34l4.15-3.24C7.8 8.36 9.35 4.65 12 2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
                         <circle cx="12" cy="10" r="1.25" fill="currentColor" />
@@ -123,7 +130,7 @@
                       </svg>
                     </a>
                   }
-                  <h4 class="item-heading text-base font-medium text-primary wrap-anywhere">{{ vehicle.name }}</h4>
+                  <h4 class="item-heading min-w-0 flex-1 text-sm font-semibold text-primary wrap-anywhere">{{ vehicle.name }}</h4>
                 </div>
                 <app-details-fields [data]="vehicle" [fields]="vehicleFields" [label]="vehicle.name" />
               </section>
@@ -133,18 +140,18 @@
           <app-skeleton label="Loading vehicles" data-loading="vehicles" />
         }
         @if (details.vehicles.status === 'error') {
-          <p role="status">Could not load some vehicles.</p>
+          <p role="status" class="detail-load-error">Could not load some vehicles.</p>
         }
       }
       @if (person.films?.length) {
-        <h3 class="section-heading -mx-6 mt-6 mb-2 border-y border-outline bg-accent-container px-6 py-3 text-base font-medium text-accent md:-mx-8 md:px-8">Films</h3>
+        <h3 class="detail-section-heading">Films</h3>
         @if (details.films.data.length > 0) {
           <mat-list role="list" aria-label="Films" class="py-0!">
             @for (film of details.films.data; track film.url) {
-              <mat-list-item role="listitem" class="film-row">
+              <mat-list-item role="listitem" class="detail-film-row">
                 <span matListItemTitle class="film-title flex items-center gap-2">
                   @if (movieId(film); as id) {
-                    <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-full! p-0! leading-none!" [routerLink]="['/movies', id]" [attr.aria-label]="'Navigate to movie: ' + film.title" matTooltip="navigate to movie" matTooltipPosition="above">
+                    <a mat-stroked-button class="grid h-10! min-h-10! w-10! min-w-10! shrink-0 place-items-center rounded-xl! p-0! leading-none!" [routerLink]="['/movies', id]" [attr.aria-label]="'Navigate to movie: ' + film.title" matTooltip="navigate to movie" matTooltipPosition="above">
                       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                         <rect x="4" y="4.5" width="16" height="15" rx="1.5" stroke="currentColor" stroke-width="1.6" />
                         <path d="M8 4.5v15M16 4.5v15M4 9h4m-4 6h4m8-6h4m-4 6h4" stroke="currentColor" stroke-width="1.4" />
@@ -161,7 +168,7 @@
           <app-skeleton label="Loading films" data-loading="films" />
         }
         @if (details.films.status === 'error') {
-          <p role="status">Could not load some films.</p>
+          <p role="status" class="detail-load-error">Could not load some films.</p>
         }
       }
     }
@@ -171,7 +178,10 @@
       </button>
     </footer>
   } @else {
-    <h2 id="details-title" class="my-7 text-[28px] leading-9 text-primary wrap-anywhere">Person not found</h2>
-    <p>This person is no longer in the list.</p>
+    <div class="mt-6 rounded-xl border border-outline/60 bg-surface-muted p-5">
+      <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Unavailable</p>
+      <h2 id="details-title" class="text-2xl font-semibold leading-8 tracking-tight text-primary">Person not found</h2>
+      <p class="mt-2 text-sm">This person is no longer in the list.</p>
+    </div>
   }
 </article>

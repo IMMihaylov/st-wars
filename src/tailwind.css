@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
-/* The demo's azure/blue Material palette, exposed as Tailwind utilities. */
 @theme {
-  --color-primary: #005cbb;
-  --color-primary-container: #d7e3ff;
-  --color-accent: #0000ff;
-  --color-accent-container: #e0e0ff;
-  --color-outline: #c4c6d0;
-  --color-body: #44474e;
+  --color-primary: #294d70;
+  --color-primary-container: #e7eef5;
+  --color-accent: #236b7d;
+  --color-accent-container: #edf4f5;
+  --color-outline: #d3dbe4;
+  --color-body: #25313e;
+  --color-canvas: #f3f5f8;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f7f9fb;
+  --color-sidebar: #172333;
+  --color-sidebar-active: #2a3d52;
+  --color-sidebar-muted: #aeb9c7;
+  --color-sidebar-accent: #8dc9df;
 }

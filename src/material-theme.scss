@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-$colors: (primary: mat.$azure-palette, tertiary: mat.$blue-palette);
+$colors: (primary: mat.$blue-palette, tertiary: mat.$cyan-palette);
 
 html {
   color-scheme: light;

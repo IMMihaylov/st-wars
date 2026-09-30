@@ -1,12 +1,81 @@
 body {
   margin: 0;
-  font: 14px/20px Roboto, sans-serif;
-  color: #44474e;
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font: 14px/1.55 Roboto, 'Segoe UI', sans-serif;
 }
 
 :focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: -2px;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.detail-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 12px;
+  color: var(--color-accent);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.detail-section-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-outline);
+}
+
+.detail-related-list {
+  display: grid;
+  gap: 10px;
+}
+
+.detail-related-card {
+  border: 1px solid color-mix(in srgb, var(--color-outline) 72%, white);
+  border-radius: 12px;
+  background: var(--color-surface-muted);
+  padding: 12px;
+}
+
+.detail-film-row {
+  min-height: 56px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--color-outline) 72%, white);
+  border-radius: 12px;
+  background: var(--color-surface-muted);
+}
+
+.detail-film-row:last-child {
+  margin-bottom: 0;
+}
+
+mat-list-item.detail-film-row {
+  padding-inline: 12px;
+}
+
+.detail-opening-crawl {
+  border: 1px solid color-mix(in srgb, var(--color-outline) 72%, white);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 10px;
+  background: var(--color-surface-muted);
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.detail-load-error {
+  margin-block: 12px;
+  border: 1px solid color-mix(in srgb, var(--color-outline) 72%, white);
+  border-radius: 10px;
+  background: var(--color-surface-muted);
+  padding: 12px;
+  font-size: 13px;
 }
 
 .person-actions-menu.mat-mdc-menu-panel {

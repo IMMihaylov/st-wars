@@ -1,9 +1,9 @@
-<section #viewport class="h-full overflow-y-auto" (scroll)="onScroll()" [attr.aria-label]="listLabel()" tabindex="0">
+<section #viewport class="h-full overflow-y-auto bg-surface" (scroll)="onScroll()" [attr.aria-label]="listLabel()" tabindex="0">
   @if (items().length) {
     <ul>
       @for (item of items(); track item.id) {
         <li>
-          <button class="flex min-h-14 w-full cursor-pointer items-center gap-4 border-b border-outline px-6 py-4 text-left hover:bg-primary-container focus-visible:bg-primary-container aria-[current=true]:bg-primary aria-[current=true]:text-white md:px-8"
+          <button class="flex min-h-14 w-full cursor-pointer items-center gap-4 border-b border-outline/60 border-l-2 border-l-transparent px-6 py-4 text-left text-body transition-colors hover:bg-surface-muted focus-visible:bg-primary-container aria-[current=true]:border-l-accent aria-[current=true]:bg-primary-container aria-[current=true]:font-semibold aria-[current=true]:text-primary md:px-8"
             type="button" [attr.data-item-id]="item.id" [attr.aria-current]="item.id === selectedId() ? 'true' : null" (click)="itemSelected.emit(item.id)">
             @for (column of columns(); track column.key) {
               <span class="min-w-0 flex-1 truncate first:flex-[1.5]">{{ item[column.key] | formatValue: column.key }}</span>

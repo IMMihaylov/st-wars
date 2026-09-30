@@ -3,15 +3,21 @@
 }
 
 .person-edit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 9999px;
   color: var(--color-primary);
   min-width: 96px;
   height: 48px;
 
   .person-action-content {
-    display: inline-flex;
+    display: flex;
+    width: 100%;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    line-height: 1;
     white-space: nowrap;
   }
 }
@@ -31,21 +37,6 @@
     flex: 0 0 20px;
     color: var(--color-primary);
   }
-}
-
-.film-row {
-  height: auto;
-  min-height: 56px;
-  padding: 16px 0 12px;
-  border-bottom: 1px solid var(--color-outline);
-
-  &:last-child {
-    border-bottom: 0;
-  }
-}
-
-mat-list-item.film-row {
-  padding-inline: 0;
 }
 
 .film-title {

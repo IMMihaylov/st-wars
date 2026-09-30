@@ -1,13 +1,13 @@
-<mat-drawer-container class="h-full bg-white! text-body!" [hasBackdrop]="false">
-  <mat-drawer class="w-full! rounded-none! bg-white! shadow-[-8px_0_24px_-8px_rgba(0,0,0,0.2)]! md:w-[560px]! md:rounded-l-2xl!" position="end" mode="over" [opened]="detailsOpen()" [disableClose]="true"
+<mat-drawer-container class="h-full bg-canvas! text-body!" [hasBackdrop]="false">
+  <mat-drawer class="w-full! rounded-none! border-l! border-outline/60! bg-surface! shadow-[-12px_0_32px_-18px_rgba(15,23,42,0.26)]! md:w-[560px]! md:rounded-l-2xl!" position="end" mode="over" [opened]="detailsOpen()" [disableClose]="true"
     (keydown.escape)="closeDetails(); $event.stopPropagation()" role="dialog" aria-labelledby="details-title">
     <router-outlet />
   </mat-drawer>
   <mat-drawer-content>
     <section class="flex h-full flex-col" aria-labelledby="people-title">
-      <header class="p-6 md:px-8 md:pt-7">
-        <h1 class="text-[32px] leading-10 text-primary" id="people-title">People</h1>
-        <p class="mt-2 mb-6 inline-block rounded-full bg-primary-container px-3 py-1 font-medium text-primary" role="status">{{ filtered().length }} people</p>
+      <header class="border-b border-outline/60 bg-surface px-6 py-6 md:px-8 md:py-7">
+        <h1 class="text-[30px] leading-9 font-semibold tracking-tight text-primary" id="people-title">People</h1>
+        <p class="mt-3 mb-5 inline-flex items-center rounded-md border border-outline/70 bg-surface-muted px-2.5 py-1 text-xs font-medium text-body" role="status">{{ filtered().length }} people</p>
         <div class="flex flex-wrap items-center gap-4">
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="min-w-40 flex-1">
             <mat-label>Filter by name</mat-label>
@@ -16,7 +16,7 @@
           <button mat-flat-button color="accent" (click)="addPerson()">Add person</button>
         </div>
       </header>
-      <div class="flex gap-4 border-y border-outline bg-accent-container px-6 py-4 font-medium text-accent md:px-8">
+      <div class="flex gap-4 border-b border-outline/60 bg-surface-muted px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary md:px-8">
         @for (field of displayFields; track field.key) {
           <span class="min-w-0 flex-1 first:flex-[1.5]">{{ field.label }}</span>
         }
