@@ -41,7 +41,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('[aria-label="Open navigation"]');
-    expect(button.textContent).toContain('\u2630');
+    expect(button.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
     expect(button.getAttribute('aria-expanded')).toBe('false');
     button.click();
     await fixture.whenStable();
