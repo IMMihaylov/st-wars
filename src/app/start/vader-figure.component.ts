@@ -38,7 +38,6 @@ export class VaderFigureComponent implements AfterViewInit, OnDestroy {
   private figure: THREE.Group | null = null;
   private resizeObserver: ResizeObserver | null = null;
   private animationFrame = 0;
-  private introCancelled = false;
 
   private readonly render = () => {
     if (this.renderer && this.scene && this.camera) {
@@ -46,20 +45,14 @@ export class VaderFigureComponent implements AfterViewInit, OnDestroy {
     }
   };
 
-  private readonly stopIntro = () => {
-    this.introCancelled = true;
-    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
-    this.animationFrame = 0;
-  };
-
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => this.initializeScene());
   }
 
   ngOnDestroy() {
-    this.stopIntro();
+    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
+    this.animationFrame = 0;
     this.resizeObserver?.disconnect();
-    this.controls?.removeEventListener('start', this.stopIntro);
     this.controls?.removeEventListener('change', this.render);
     this.controls?.dispose();
 
@@ -85,7 +78,6 @@ export class VaderFigureComponent implements AfterViewInit, OnDestroy {
   onKeydown(event: KeyboardEvent) {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
     event.preventDefault();
-    this.stopIntro();
     this.controls?.rotateLeft(event.key === 'ArrowLeft' ? 0.22 : -0.22);
     this.controls?.update();
   }
@@ -140,7 +132,6 @@ export class VaderFigureComponent implements AfterViewInit, OnDestroy {
     this.controls.rotateSpeed = 0.55;
     this.controls.minPolarAngle = Math.PI / 2 - 0.38;
     this.controls.maxPolarAngle = Math.PI / 2 + 0.38;
-    this.controls.addEventListener('start', this.stopIntro);
     this.controls.addEventListener('change', this.render);
     this.controls.update();
 
@@ -148,7 +139,7 @@ export class VaderFigureComponent implements AfterViewInit, OnDestroy {
     this.resizeObserver.observe(canvas);
     this.resize();
     this.render();
-    this.playIntroTurn();
+    this.startRotation();
   }
 
   private resize() {
@@ -166,21 +157,20 @@ export class VaderFigureComponent implements AfterViewInit, OnDestroy {
     this.render();
   }
 
-  private playIntroTurn() {
+  private startRotation() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !this.figure) return;
 
-    const startedAt = performance.now();
-    const startingAngle = this.figure.rotation.y;
-    const angle = -0.1;
-    const duration = 1450;
+    let previousFrame = 0;
+    const radiansPerSecond = 0.12;
     const step = (now: number) => {
-      if (!this.figure || this.introCancelled) return;
-      const progress = Math.min((now - startedAt) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      this.figure.rotation.y = startingAngle + angle * eased;
-      this.render();
-      if (progress < 1) this.animationFrame = requestAnimationFrame(step);
-      else this.animationFrame = 0;
+      if (!this.figure) return;
+      if (previousFrame) {
+        const elapsedSeconds = Math.min((now - previousFrame) / 1000, 0.1);
+        this.figure.rotation.y -= elapsedSeconds * radiansPerSecond;
+        this.render();
+      }
+      previousFrame = now;
+      this.animationFrame = requestAnimationFrame(step);
     };
     this.animationFrame = requestAnimationFrame(step);
   }
