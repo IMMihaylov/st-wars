@@ -35,8 +35,10 @@ describe('Movies list', () => {
     await fixture.whenStable();
 
     const rows = () => fixture.nativeElement.querySelectorAll('[data-item-id]');
+    const count = () => fixture.nativeElement.querySelector('header [role="status"]').textContent.trim();
     expect(fixture.nativeElement.querySelector('h1').textContent).toContain('Movies');
     expect(rows()).toHaveLength(2);
+    expect(count()).toBe('2/2 movies');
     expect(rows()[0].textContent).toContain('A New Hope');
 
     const search: HTMLInputElement = fixture.nativeElement.querySelector('input');
@@ -44,6 +46,7 @@ describe('Movies list', () => {
     search.dispatchEvent(new Event('input'));
     await fixture.whenStable();
     expect(rows()).toHaveLength(1);
+    expect(count()).toBe('1/1 movie');
     expect(rows()[0].textContent).toContain('The Empire Strikes Back');
     http.verify();
   });

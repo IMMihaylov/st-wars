@@ -30,7 +30,9 @@ describe('People list', () => {
     const fixture = TestBed.createComponent(PeopleListComponent);
     await fixture.whenStable();
     const rows = () => fixture.nativeElement.querySelectorAll('[data-item-id]');
+    const count = () => fixture.nativeElement.querySelector('header [role="status"]').textContent.trim();
     expect(rows().length).toBe(20);
+    expect(count()).toBe('20/45 people');
     const viewport: HTMLElement = fixture.nativeElement.querySelector('[aria-label="People list"]');
     Object.defineProperties(viewport, {
       clientHeight: { value: 100 },
@@ -40,9 +42,11 @@ describe('People list', () => {
     viewport.dispatchEvent(new Event('scroll'));
     await fixture.whenStable();
     expect(rows().length).toBe(40);
+    expect(count()).toBe('40/45 people');
     viewport.dispatchEvent(new Event('scroll'));
     await fixture.whenStable();
     expect(rows().length).toBe(45);
+    expect(count()).toBe('45/45 people');
     viewport.dispatchEvent(new Event('scroll'));
     await fixture.whenStable();
     expect(rows().length).toBe(45);
@@ -51,17 +55,20 @@ describe('People list', () => {
     search.dispatchEvent(new Event('input'));
     await fixture.whenStable();
     expect(rows().length).toBe(1);
+    expect(count()).toBe('1/1 person');
     expect(rows()[0].textContent).toContain('Leia Organa');
     expect(viewport.scrollTop).toBe(0);
     search.value = 'no matching person';
     search.dispatchEvent(new Event('input'));
     await fixture.whenStable();
     expect(rows().length).toBe(0);
+    expect(count()).toBe('0/0 people');
     expect(fixture.nativeElement.textContent).toContain('No people found');
     search.value = '';
     search.dispatchEvent(new Event('input'));
     await fixture.whenStable();
     expect(rows().length).toBe(20);
+    expect(count()).toBe('20/45 people');
     http.expectNone(() => true);
     http.verify();
   });

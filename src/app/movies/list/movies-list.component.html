@@ -7,7 +7,7 @@
     <section class="flex h-full flex-col" aria-labelledby="movies-title">
       <header class="border-b border-outline/60 bg-surface px-6 py-6 md:px-8 md:py-7">
         <h1 class="text-[30px] leading-9 font-semibold tracking-tight text-primary" id="movies-title">Movies</h1>
-        <p class="mt-3 mb-5 inline-flex items-center rounded-md border border-outline/70 bg-surface-muted px-2.5 py-1 text-xs font-medium text-body" role="status">{{ filtered().length }} movies</p>
+        <p class="mt-3 mb-5 inline-flex items-center rounded-md border border-outline/70 bg-surface-muted px-2.5 py-1 text-xs font-medium text-body" role="status">{{ visible().length }}/{{ filtered().length }} {{ filtered().length === 1 ? 'movie' : 'movies' }}</p>
         <div class="flex flex-wrap items-center gap-4">
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="min-w-40 flex-1">
             <mat-label>Filter by title</mat-label>

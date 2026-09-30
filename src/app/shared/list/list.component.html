@@ -1,18 +1,20 @@
 <section #viewport class="h-full overflow-y-auto bg-surface" (scroll)="onScroll()" [attr.aria-label]="listLabel()" tabindex="0">
   @if (items().length) {
-    <ul>
+    <ul class="divide-y divide-outline/60 border-b border-outline/60">
       @for (item of items(); track item.id) {
         <li>
-          <button class="flex min-h-14 w-full cursor-pointer items-center gap-4 border-b border-outline/60 border-l-2 border-l-transparent px-6 py-4 text-left text-body transition-colors hover:bg-surface-muted focus-visible:bg-primary-container aria-[current=true]:border-l-accent aria-[current=true]:bg-primary-container aria-[current=true]:font-semibold aria-[current=true]:text-primary md:px-8"
+          <button class="relative flex min-h-16 w-full cursor-pointer items-center gap-4 bg-surface px-6 py-3.5 text-left transition-colors duration-150 before:absolute before:inset-y-3 before:left-0 before:w-[3px] before:rounded-r-full before:bg-transparent hover:bg-surface-muted focus-visible:z-10 focus-visible:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent aria-[current=true]:bg-primary-container/70 aria-[current=true]:before:bg-accent md:px-8"
             type="button" [attr.data-item-id]="item.id" [attr.aria-current]="item.id === selectedId() ? 'true' : null" (click)="itemSelected.emit(item.id)">
             @for (column of columns(); track column.key) {
-              <span class="min-w-0 flex-1 truncate first:flex-[1.5]">{{ item[column.key] | formatValue: column.key }}</span>
+              <span class="min-w-0 flex-1 truncate text-[13px] text-body/75 first:flex-[1.5] first:text-sm first:font-semibold first:text-primary">{{ item[column.key] | formatValue: column.key }}</span>
             }
           </button>
         </li>
       }
     </ul>
   } @else {
-    <p class="p-6" role="status">{{ emptyMessage() }}</p>
+    <div class="mx-6 my-8 rounded-xl border border-outline/70 bg-surface-muted px-6 py-10 text-center md:mx-8">
+      <p class="text-sm font-medium text-body/75" role="status">{{ emptyMessage() }}</p>
+    </div>
   }
 </section>
